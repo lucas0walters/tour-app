@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import TourCard from "./TourCard";
 
 //TourList is responsible for fetching and rendering a list of tours.
-const TourList = (tours, setTours, onRemove) => {
+const TourList = ({ tours, setTours, onRemove }) => {
     //State to manage loading and error states
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -10,7 +10,7 @@ const TourList = (tours, setTours, onRemove) => {
     //Function to fetch tour data from the API
     const fetchTours = async () => {
         try {
-            const response = await fetch("https://course-api.com/react-tours-project");
+            const response = await fetch("https://api.allorigins.win/raw?url=https://course-api.com/react-tours-project");
             if (!response.ok) { //Checking response status
                 throw new Error("Failed to fetch tours");
             }
@@ -18,6 +18,7 @@ const TourList = (tours, setTours, onRemove) => {
             setTours(data); //Setting the fetched data to global state
         } catch (error) {
             setError(true);
+            console.log(error); //Logging the error to the console
         } finally {
             setLoading(false);
         }
@@ -43,7 +44,7 @@ const TourList = (tours, setTours, onRemove) => {
         return (
             <div className="no-tours">
                 <h2>No Tours Available</h2>
-                <button onClick={fetchTours()} className="refresh-btn">Refresh</button>
+                <button onClick={fetchTours} className="refresh-btn">Refresh</button>
             </div>
         );
     }
